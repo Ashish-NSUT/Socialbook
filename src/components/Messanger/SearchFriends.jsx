@@ -17,7 +17,7 @@ export default function SearchFriends() {
     useEffect(() => {
         const findUsers = async () => {
             console.log(search);
-            const response = await fetch(`http://localhost:5000/api/profile?search=${search}`, {
+            const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/profile?search=${search}`, {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",

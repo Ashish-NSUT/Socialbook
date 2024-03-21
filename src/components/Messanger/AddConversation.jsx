@@ -19,7 +19,7 @@ export default function AddConversation(props) {
         getMessage(chatId[0]._id,userData);
     }
     else {
-        const response = await fetch("http://localhost:5000/api/chat", {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/chat`, {
             method: "POST",
                 headers: {
                     "Content-Type": "application/json",

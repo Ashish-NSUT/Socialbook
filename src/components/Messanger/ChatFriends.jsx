@@ -14,7 +14,7 @@ export default function ChatFriends(props) {
 
 
     const fetchFriends = async () => {
-        const response = await fetch(`http://localhost:5000/api/chat/getFriends`, {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/chat/getFriends`, {
             method: "GET",
             headers: {
               "auth-token" : localStorage.getItem('token')
