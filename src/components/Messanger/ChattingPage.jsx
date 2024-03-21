@@ -44,7 +44,7 @@ export default function ChattingPage() {
 
   // websocket formation and recieving message 
   useEffect(() => {
-    socket.current = io("ws://localhost:5000");
+    socket.current = io(`${process.env.REACT_APP_BASE_URL}`);
 
     socket.current.on("getMessage", data => {
       setArrivalMessage({
