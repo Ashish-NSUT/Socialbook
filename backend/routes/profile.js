@@ -20,12 +20,15 @@ router.get("/:id", async (req, res) => {
 // get user by name and get its info
 router.get("/", fetchuser ,async (req, res) => {
     try{
+        let userId = req.body.user;
+        if(userId.data) userId = userId.data;
+
         const keyword = req.query.search ? {
             name:{$regex: req.query.search, $options: "i"}
         }
         :{}
         
-        const user = await User.find(keyword).select("-password").find({_id :{$ne:req.body.user}});
+        const user = await User.find(keyword).select("-password").find({_id :{$ne:userId}});
         res.status(200).json(user);
 
     } catch (error) {
@@ -41,7 +44,10 @@ router.put(
     fetchuser,
     async (req, res) => {
       try {
-          await User.findByIdAndUpdate(req.body.user,{$push: {Friends:req.params.id}})
+        let userId = req.body.user;
+        if(userId.data) userId = userId.data;
+
+          await User.findByIdAndUpdate(userId,{$push: {Friends:req.params.id}})
           
           res.json("New Friend added!");  
   

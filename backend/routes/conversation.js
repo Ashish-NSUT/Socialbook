@@ -24,8 +24,11 @@ router.post("/",fetchusers, async (req, res) => {
 //get the conversation object
 router.get("/getchats",fetchusers, async(req, res) => {
     try{
+        let userId = req.body.user;
+        if(userId.data) userId = userId.data;
+
         const conversation = await chatModel.find({
-            users: {$in: [req.body.user]},
+            users: {$in: [userId]},
         });
 
         res.status(200).json(conversation);
@@ -40,7 +43,10 @@ router.get("/getchats",fetchusers, async(req, res) => {
 
 router.get("/getFriends",fetchusers, async(req, res) => {
     try{
-        const user = await User.findById(req.body.user);
+        let userId = req.body.user;
+        if(userId.data) userId = userId.data;
+
+        const user = await User.findById(userId);
         const Friends = await Promise.all(
             user.Friends.map(friend => {
                 return User.findById(friend).select("-password");
