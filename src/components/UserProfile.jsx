@@ -47,7 +47,7 @@ export default function UserProfile(props) {
 
   const addFriend = async (id) => {
     setFriend(true);
-    const response = await fetch(`http://localhost:5000/api/profile/addFriend/${clickedUser}`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/profile/addFriend/${clickedUser}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

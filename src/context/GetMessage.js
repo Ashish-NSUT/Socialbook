@@ -17,6 +17,8 @@ const ConversationState = (props)=>{
 
     const CurrentuserDetails = async ()=>{
 
+      console.log(host)
+
       const response = await fetch(`${host}/api/auth/getuser`, {
         method: "GET",
         headers: {
