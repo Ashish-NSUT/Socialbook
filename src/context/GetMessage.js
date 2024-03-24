@@ -19,17 +19,23 @@ const ConversationState = (props)=>{
 
       console.log(host)
 
-      const response = await fetch(`${host}/api/auth/getuser`, {
-        method: "GET",
-        headers: {
-          "auth-token" : localStorage.getItem('token')
-        }
-      });
+      try{
+        const response = await fetch(`${host}/api/auth/getuser`, {
+          method: "GET",
+          headers: {
+            "auth-token" : localStorage.getItem('token')
+          }
+        });
+  
+        const json = await response.json();
+        console.log(json);
+        localStorage.setItem("currentuser",JSON.stringify(json));
 
-      const json = await response.json();
-      console.log(json);
+        setCurrentuser(json);
 
-      setCurrentuser(json);
+      }catch(error) {
+        console.log("error while fetching current user", error);
+      }
     }
 
     //Fetch other user details

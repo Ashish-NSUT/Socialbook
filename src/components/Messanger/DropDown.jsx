@@ -28,7 +28,7 @@ const DropdownMenu = (props) => {
   return (
 
       <>
-        <div className={`absolute border z-[1000] ${position ? "top-[-190px]" : "top-0"} ${owner ? "right-[-180px]" : "left-[-180px]"} bg-[#1c2e46] w-[180px] rounded-md py-3 text-gray-300`}>
+        <div className={`absolute border z-[400] ${position ? "top-[-190px]" : "top-0"} ${owner ? "right-[-180px]" : "left-[-180px]"} bg-[#1c2e46] w-[180px] rounded-md py-3 text-gray-300`}>
           {/* Dropdown content */}
           <p className='cursor-pointer hover:bg-[#32465e] px-6 py-3'>More Info</p>
           <p className='cursor-pointer hover:bg-[#32465e] px-6 py-3' onClick={() => {setDeletePrompt(message._id)}}>Delete</p>

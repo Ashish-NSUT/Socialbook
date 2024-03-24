@@ -11,8 +11,13 @@ export default function Home() {
   const {CurrentuserDetails} = context;
 
   useEffect(() => {
+    const fetchCurrentuser = async ()=>{
+      await CurrentuserDetails();
+  
+    }
     if(localStorage.getItem("token")) {
-      CurrentuserDetails();
+      console.log("hi")
+      fetchCurrentuser();
     }
     else {
       navigate("/login");

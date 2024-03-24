@@ -28,7 +28,7 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io')(server,{
     cors: {
-        origin: 'https://socialbook-one.vercel.app',
+        origin: 'http://localhost:3000',
     }
 });
 

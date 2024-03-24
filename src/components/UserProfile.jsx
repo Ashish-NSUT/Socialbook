@@ -12,12 +12,6 @@ export default function UserProfile(props) {
   const context = useContext(messageContext);
   const {CurrentuserDetails,currentuser,fetchusers,clickedUser} = context;
 
-
-  const fetchCurrentuser = async ()=>{
-    await CurrentuserDetails();
-
-  }
-
   useEffect(() => {
     const fetchprofile = async () => {
       
@@ -26,26 +20,20 @@ export default function UserProfile(props) {
     }
 
     fetchprofile();
+   const loggedinuser = JSON.parse(localStorage.getItem("currentuser"));
 
-    if(currentuser === null) {
-      fetchCurrentuser();
-      console.log(currentuser.Friends.includes(clickedUser));
-      if(currentuser.Friends.includes(clickedUser)) {
-        setFriend(true);
-      }
+    if(loggedinuser.Friends.includes(clickedUser)) {
+      setFriend(true);
     }
-    else {
-      console.log(currentuser.Friends.includes(clickedUser));
-      if(currentuser.Friends.includes(clickedUser)) {
-        setFriend(true);
-      }
-      
-    }
-    
+
   }, [clickedUser])
   
 
   const addFriend = async (id) => {
+    if(friend) {
+      console.log("cant click");
+      return ;
+    }
     setFriend(true);
     const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/profile/addFriend/${clickedUser}`, {
         method: "PUT",
@@ -57,7 +45,6 @@ export default function UserProfile(props) {
 
       const json = await response.json();
       console.log(json);
-      fetchCurrentuser();
     }
 
   return (

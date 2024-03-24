@@ -5,6 +5,7 @@ import ChatFriends from './ChatFriends';
 import { io } from "socket.io-client";
 import MessageLoading from './MessageLoading';
 import DeletePrompt from './DeletePrompt';
+import {Link} from 'react-router-dom';
 
 
 export default function ChattingPage() {
@@ -130,13 +131,17 @@ export default function ChattingPage() {
 
         {/* Name list     */}
 
-        {currentuser && <ChatFriends currentuser={currentuser} setOtherUser={setOtherUser} chats={chats} arrivalMessage={arrivalMessage} clicked={clicked} setClicked={setClicked} getMessage={getMessage} search={search} setSearch={setSearch} loading={loading} />}
+        {currentuser && <ChatFriends currentuser={currentuser} setOtherUser={setOtherUser} chats={chats} arrivalMessage={arrivalMessage} 
+        clicked={clicked} setClicked={setClicked} getMessage={getMessage} search={search} setSearch={setSearch} loading={loading} />}
 
 
         {/* chat area   */}
-        <div className="bg-gray-200 h-full w-[70%] relative flex flex-col-reverse">
+        <div className={`bg-gray-200 h-full ${clicked ? 'flex w-full' : "hidden"} sm:w-[70%] relative sm:flex flex-col-reverse`}>
 
           {otherUser && <div className={`name w-full shadow h-16 absolute top-0 bg-gray-200 flex items-center gap-2 px-4 ${otherUser !== null ? "" : "hidden"}`}>
+            <div className={`sm:hidden ${clicked ? 'block' : "hidden"} flex items-center`}  onClick={()=>{setClicked(null)}}>
+              <i className="fa-solid fa-chevron-left text-black text-xl cursor-pointer "></i>
+            </div>
             <img className="w-[40px] h-[40px] rounded-full" src={otherUser.pic} alt="" />
 
             <div className="px-2">
@@ -153,7 +158,7 @@ export default function ChattingPage() {
 
           <div className='flex flex-col mb-16 p-5 gap-2 overflow-auto mt-16 scrollbar'>
 
-            {!otherUser && <div className='flex flex-col absolute top-[30vh] left-[25vw]'>
+            {!otherUser && <div className='flex flex-col absolute top-[30%] left-[30%]'>
               <i className="fa-brands fa-rocketchat text-[20vw] text-gray-400"></i>
               <div className="text-gray-400 text-[1.8vw] font-bold mx-auto"> Open new conversation</div>
             </div>}

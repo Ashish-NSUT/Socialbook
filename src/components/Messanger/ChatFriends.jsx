@@ -36,7 +36,7 @@ export default function ChatFriends(props) {
 
 
   return (
-    <div className="nameList w-[30%] bg-[#1c2e46] h-full relative">
+    <div className={`nameList w-full ${clicked ? 'hidden sm:flex flex-col' : ""}  sm:w-[30%] bg-[#1c2e46] h-full relative`}>
 
 
 {/* Your Name and profile information */}

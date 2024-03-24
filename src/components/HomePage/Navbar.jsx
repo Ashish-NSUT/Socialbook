@@ -10,13 +10,13 @@ export default function Navbar(props) {
 
     return (
         <>
-            <nav className={`flex w-full gap-10 justify-evenly bg-black m-0 p-0 ${location.pathname === '/login' || location.pathname  === '/chatting' || location.pathname === '/signup'? "hidden" : ""} sticky top-0`}>
+            <nav className={`flex w-full sm:gap-10 justify-between sm:justify-evenly bg-black m-0 p-0 ${location.pathname === '/login' || location.pathname  === '/chatting' || location.pathname === '/signup'? "hidden" : ""} sticky top-0`}>
                 
                 {/* search  */}
                 <SearchFriends/>
 
 
-                <div className="icons flex gap-10 text-lg leading-3 item-center text-white transition-all origin-left">
+                <div className="icons flex justify-evenly sm:gap-10 w-full sm:w-fit text-lg leading-3 item-center text-white transition-all origin-left">
                     <Link className={`p-5 cursor-pointer duration-700 ${location.pathname === '/' ? "bg-white rounded-t-xl text-black" : "hover:text-gray-300"}`} to="/">
                         <i className="fa-solid fa-house pt-1 cursor-pointer" id='home'></i>
                     </Link>
@@ -29,7 +29,7 @@ export default function Navbar(props) {
                     <Link className={`p-5 cursor-pointer duration-700 ${location.pathname === '/notifications' ? "bg-white rounded-t-xl text-black" : "hover:text-gray-300"}`} to="/notifications">
                         <i className="fa-solid fa-envelope pt-1 cursor-pointer " id='notifications'></i>
                     </Link>
-                    <Link className={`p-5 cursor-pointer duration-700 ${location.pathname === '/setting'? "bg-white rounded-t-xl text-black" : "hover:text-gray-300"}`} to="/setting">
+                    <Link className={`p-5 cursor-pointer hidden sm:block duration-700 ${location.pathname === '/setting'? "bg-white rounded-t-xl text-black" : "hover:text-gray-300"}`} to="/setting">
                         <i className="fa-solid fa-bars pt-1 cursor-pointer " id='setting'></i>
                     </Link>
                 </div>

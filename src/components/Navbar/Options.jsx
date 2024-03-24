@@ -16,6 +16,8 @@ export default function Options(props) {
 
 const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem("currentuser");
+  
   props.handleClick();
   navigate('/login');
 }
