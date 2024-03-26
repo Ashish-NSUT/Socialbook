@@ -5,14 +5,14 @@ import ChatFriends from './ChatFriends';
 import { io } from "socket.io-client";
 import MessageLoading from './MessageLoading';
 import DeletePrompt from './DeletePrompt';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 export default function ChattingPage() {
 
   const context = useContext(messageContext);
 
-  const { chats, messages, fetchConversation, fetchMessages, currentuser, createMessage, CurrentuserDetails, setMessages } = context;
+  const { chats, setChats, messages, CreateConversation, fetchConversation, fetchMessages, currentuser, createMessage, CurrentuserDetails, setMessages } = context;
   const [otherUser, setOtherUser] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState(null);
   const [clicked, setClicked] = useState(null);
@@ -62,6 +62,9 @@ export default function ChattingPage() {
   useEffect(() => {
     if (otherUser && arrivalMessage && (otherUser._id === arrivalMessage.sender)) {
       setMessages((prev) => [...prev, arrivalMessage]);
+    }
+    else if(arrivalMessage) {
+      fetchConversation();
     }
 
   }, [arrivalMessage, otherUser, setMessages])
@@ -118,8 +121,8 @@ export default function ChattingPage() {
 
       createMessage(messageBody);
     }
-    e.target.reset();
-
+    setNewMessage(null);
+    input.current.value = "";
   }
 
 
@@ -131,15 +134,15 @@ export default function ChattingPage() {
 
         {/* Name list     */}
 
-        {currentuser && <ChatFriends currentuser={currentuser} setOtherUser={setOtherUser} chats={chats} arrivalMessage={arrivalMessage} 
-        clicked={clicked} setClicked={setClicked} getMessage={getMessage} search={search} setSearch={setSearch} loading={loading} />}
+        {currentuser && <ChatFriends currentuser={currentuser} setOtherUser={setOtherUser} chats={chats} arrivalMessage={arrivalMessage}
+          clicked={clicked} setClicked={setClicked} getMessage={getMessage} search={search} setSearch={setSearch} loading={loading} />}
 
 
         {/* chat area   */}
         <div className={`bg-gray-200 h-full ${clicked ? 'flex w-full' : "hidden"} sm:w-[70%] relative sm:flex flex-col-reverse`}>
 
           {otherUser && <div className={`name w-full shadow h-16 absolute top-0 bg-gray-200 flex items-center gap-2 px-4 ${otherUser !== null ? "" : "hidden"}`}>
-            <div className={`sm:hidden ${clicked ? 'block' : "hidden"} flex items-center`}  onClick={()=>{setClicked(null)}}>
+            <div className={`sm:hidden ${clicked ? 'block' : "hidden"} flex items-center`} onClick={() => { setClicked(null) }}>
               <i className="fa-solid fa-chevron-left text-black text-xl cursor-pointer "></i>
             </div>
             <img className="w-[40px] h-[40px] rounded-full" src={otherUser.pic} alt="" />
@@ -179,7 +182,8 @@ export default function ChattingPage() {
 
           {/* sending area */}
 
-          {otherUser && <form className="w-full shadow-[0_3px_10px_rgba(0,0,0,0.3)] absolute bottom-0 p-2 flex justify-between items-center gap-5" onSubmit={sendMessage}>
+          {otherUser && <div className="w-full shadow-[0_3px_10px_rgba(0,0,0,0.3)] absolute bottom-0 p-2 flex 
+          justify-between items-center gap-5" >
 
             <i className="fa-solid fa-face-smile text-2xl hover:scale-110 ml-2"></i>
 
@@ -187,17 +191,17 @@ export default function ChattingPage() {
 
             <i className="fa-solid fa-paperclip text-2xl hover:scale-110"></i>
 
-            <button type="submit" className="bg-[#1c2e46] rounded-full py-[10px] px-3 hover:scale-110" >
+            <button type="submit" className="bg-[#1c2e46] rounded-full py-[10px] px-3 hover:scale-110" onClick={sendMessage} >
               <i className="fa-solid fa-paper-plane text-center text-white text-xl"></i>
             </button>
-          </form>}
+          </div>}
         </div>
       </div>
 
 
-            {/* Delete Prompt */}
-            <DeletePrompt/>
-      
+      {/* Delete Prompt */}
+      <DeletePrompt />
+
     </>
   )
 }
