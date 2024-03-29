@@ -5,7 +5,8 @@ import ChatFriends from './ChatFriends';
 import { io } from "socket.io-client";
 import MessageLoading from './MessageLoading';
 import DeletePrompt from './DeletePrompt';
-import { Link } from 'react-router-dom';
+import Typing from './Typing';
+
 
 
 export default function ChattingPage() {
@@ -159,7 +160,8 @@ export default function ChattingPage() {
 
           {/* messsages  */}
 
-          <div className='flex flex-col mb-16 p-5 gap-2 overflow-auto mt-16 scrollbar'>
+          <div className='flex flex-col mb-16 p-5 gap-2 overflow-auto mt-16 scrollbar h-full'> 
+          
 
             {!otherUser && <div className='flex flex-col absolute top-[30%] left-[30%]'>
               <i className="fa-brands fa-rocketchat text-[20vw] text-gray-400"></i>
@@ -176,25 +178,31 @@ export default function ChattingPage() {
 
             })}
 
+            {
+              otherUser && (
+                <Typing senderId={currentuser._id} socket={socket} input={input} recipientId={otherUser}/>
+              )
+            }
+
           </div>
 
 
 
           {/* sending area */}
 
-          {otherUser && <div className="w-full shadow-[0_3px_10px_rgba(0,0,0,0.3)] absolute bottom-0 p-2 flex 
-          justify-between items-center gap-5" >
+          {otherUser && <form className="w-full shadow-[0_3px_10px_rgba(0,0,0,0.3)] absolute bottom-0 p-2 flex 
+          justify-between items-center gap-5" onSubmit={sendMessage}  >
 
             <i className="fa-solid fa-face-smile text-2xl hover:scale-110 ml-2"></i>
 
-            <input ref={input} type="text" placeholder="Enter message..." onChange={(e) => { setNewMessage(e.target.value) }} className="px-6 p-3 rounded-full w-full bg-gray-400 text-black placeholder-white shadow-inner focus:outline-none focus:placeholder-opacity-0" />
+            <input ref={input} type="text" id="messageInput" placeholder="Enter message..." onChange={(e) => { setNewMessage(e.target.value) }} className="px-6 p-3 rounded-full w-full bg-gray-400 text-black placeholder-white shadow-inner focus:outline-none focus:placeholder-opacity-0" />
 
             <i className="fa-solid fa-paperclip text-2xl hover:scale-110"></i>
 
-            <button type="submit" className="bg-[#1c2e46] rounded-full py-[10px] px-3 hover:scale-110" onClick={sendMessage} >
+            <button type="submit" className="bg-[#1c2e46] rounded-full py-[10px] px-3 hover:scale-110">
               <i className="fa-solid fa-paper-plane text-center text-white text-xl"></i>
             </button>
-          </div>}
+          </form>}
         </div>
       </div>
 

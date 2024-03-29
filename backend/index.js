@@ -72,6 +72,23 @@ io.on("connection", (socket) => {
         }
 
     })
+    // know if typing  
+    socket.on("typing", ({recipientId,Typing,senderId}) => {
+        console.log(recipientId);
+
+        const sender = getUser(recipientId);
+        if(!sender) return;
+
+        try{
+            io.to(sender.socketId).emit("typing", {
+                recipientId,
+                Typing,
+                senderId,
+            })
+        }catch(e) {
+            console.log(e);
+        }
+    })
 
     // disconects when someone leaves
     socket.on("disconnect", () =>{
